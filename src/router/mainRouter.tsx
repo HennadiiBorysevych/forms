@@ -1,9 +1,11 @@
 import {
   DeliveryAddressForm,
   MenuItem,
+  OrderConfirmation,
+  OrderedReservarionForm,
   Payment,
   SharedLayout,
-  UserInfoForm,
+  UserInfoForm
 } from "../components/molecules";
 
 import AccountPage from "../pages/AccountPage/AccountPage";
@@ -15,6 +17,9 @@ import MenuPage from "../pages/MenuPage";
 import { PATHS } from "../constants/paths";
 
 import PrivatePage from "../routes/PrivateRoute";
+import CheckoutPage from "../pages/CheckoutPage/CheckoutPage";
+import OrdersPage from "../pages/OrdersPage";
+import { OrderTakeout } from "../components/organisms";
 
 const mainRoutes = [
   {
@@ -35,12 +40,39 @@ const mainRoutes = [
         children: [
           { path: PATHS.USER_INFO, element: <UserInfoForm /> },
           { path: PATHS.DELIVERY_ADDRESS, element: <DeliveryAddressForm /> },
-          { path: PATHS.PAYMENT, element: <Payment /> },
-        ],
+          { path: PATHS.PAYMENT, element: <Payment /> }
+        ]
       },
-    ],
+      {
+        path: PATHS.CHECKOUT,
+        element: <CheckoutPage />,
+        children: [
+          { path: PATHS.BOOK_TABLE, element: <OrderedReservarionForm /> },
+          {
+            path: PATHS.DELIVERY,
+            element: <DeliveryAddressForm />
+          },
+          {
+            path: PATHS.TAKEOUT,
+            element: <OrderTakeout />
+          },
+          {
+            path: PATHS.ORDER_PAYMENT,
+            element: <Payment />
+          },
+          {
+            path: PATHS.ORDER_CONFIRMATION,
+            element: <OrderConfirmation />
+          }
+        ]
+      },
+      {
+        path: PATHS.ORDERS,
+        element: <OrdersPage />
+      }
+    ]
   },
-  { path: "*", element: <ErrorPage /> },
+  { path: "*", element: <ErrorPage /> }
 ];
 
 export default mainRoutes;

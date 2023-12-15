@@ -1,12 +1,13 @@
-import React from "react";
-import { FormikValues } from "formik";
+import React, { ReactNode } from "react";
+import { FormikValues, FormikErrors, FormikTouched } from "formik";
 import styles from "./TextInput.module.css";
 
 type TextInputProps = {
   formik: {
     values: FormikValues;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    // setFieldValue: FormikHelpers<FormikValues>["setFieldValue"];
+    errors: FormikErrors<FormikValues>;
+    touched: FormikTouched<FormikValues>;
   };
   name: string;
   placeholder: string;
@@ -17,17 +18,26 @@ const TextInput: React.FC<TextInputProps> = ({
   formik,
   name,
   placeholder,
-  type,
+  type
 }) => {
+  const { handleChange, values, errors, touched } = formik;
+
+  const isError = touched[name] && errors[name];
+
   return (
-    <input
-      className={styles.text_input}
-      type={type}
-      name={name}
-      value={formik.values[name]}
-      onChange={formik.handleChange}
-      placeholder={placeholder}
-    />
+    <div>
+      <input
+        className={`${styles.text_input} ${isError ? styles.error_border : ""}`}
+        type={type}
+        name={name}
+        value={values[name]}
+        onChange={handleChange}
+        placeholder={placeholder}
+      />
+      {touched[name] && errors[name] && (
+        <p className={styles.error_message}>{errors[name] as ReactNode}</p>
+      )}
+    </div>
   );
 };
 

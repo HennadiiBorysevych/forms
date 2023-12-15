@@ -1,4 +1,3 @@
-
 const OrderTakeout = () => {
   return <div>OrderTakeout</div>;
 };

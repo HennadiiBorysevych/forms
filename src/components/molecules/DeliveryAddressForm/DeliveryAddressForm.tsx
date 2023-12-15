@@ -1,4 +1,5 @@
 import { useFormik, FormikValues } from "formik";
+import { object, string } from "yup";
 
 import styles from "./DeliveryAddressForm.module.css";
 import { TextInput } from "../../atoms";
@@ -7,14 +8,23 @@ const deliveryAddressFormInputs = [
   {
     name: "addressTitle",
     placeholder: "Address Title (Nick name)",
-    type: "text",
+    type: "text"
   },
   { name: "city", placeholder: "City", type: "text" },
   { name: "street", placeholder: "Street Address", type: "email" },
   { name: "houseNumber", placeholder: "House Number", type: "number" },
   { name: "unit", placeholder: "Unit", type: "number" },
-  { name: "flat", placeholder: "Flat Number", type: "number" },
+  { name: "flat", placeholder: "Flat Number", type: "number" }
 ];
+
+const DeliveryAddressFormSchema = object({
+  addressTitle: string().required("Address title is required"),
+  city: string().required("City is required"),
+  street: string().required("Street is required"),
+  houseNumber: string().required("House number is required"),
+  unit: string().required("Unit number is required"),
+  flat: string().required("Flat number is required")
+});
 
 const DeliveryAddressForm = () => {
   const formik = useFormik({
@@ -24,18 +34,19 @@ const DeliveryAddressForm = () => {
       street: "",
       houseNumber: "",
       unit: "",
-      flat: "",
+      flat: ""
     },
+    validationSchema: DeliveryAddressFormSchema,
     onSubmit: ({
       addressTitle,
       city,
       street,
       houseNumber,
       unit,
-      flat,
+      flat
     }: FormikValues) => {
       console.log(addressTitle, city, street, houseNumber, unit, flat);
-    },
+    }
   });
 
   return (
@@ -51,12 +62,8 @@ const DeliveryAddressForm = () => {
         ))}
         <div className={styles.bulding_address_wrapper}>
           {deliveryAddressFormInputs.slice(3).map((input, i) => (
-            <label key={i}>
-              <input
-                className={styles.building_input}
-                {...input}
-                onChange={formik.handleChange}
-              />
+            <label className={styles.delivery_address_label} key={i}>
+              <TextInput {...input} formik={formik} />
             </label>
           ))}
         </div>

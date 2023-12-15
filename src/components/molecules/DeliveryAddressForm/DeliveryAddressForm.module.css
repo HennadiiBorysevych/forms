@@ -55,3 +55,7 @@
 
   border: none;
 }
+
+.delivery_address_label {
+  width: 300px;
+}
