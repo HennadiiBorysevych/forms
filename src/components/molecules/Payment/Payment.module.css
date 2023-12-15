@@ -36,7 +36,8 @@
   border: none;
 }
 
-.delivery_address_from {
+.delivery_address_form {
   display: flex;
   flex-direction: column;
+  width: 600px;
 }
